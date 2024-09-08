@@ -29,4 +29,4 @@ npm run build
 ```
 
 ### Information
-The works are divided into tags, for example, the second work lies in the tag 2.number.number
+The works are divided into branches for example, the second work lies in the branch 2.x
