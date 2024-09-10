@@ -1,4 +1,6 @@
 <script setup>
+import {ref} from "vue";
+
 const fotos = [
     'ham.png', '1.png', '2.png', '3.png', '4.png', 'ham.png', '1.png', '2.png', '3.png', '4.png', 'ham.png', '1.png', '2.png', '3.png', '4.png',
 ];
@@ -7,6 +9,21 @@ const tiles = [
 ];
 
 const allPhotos = fotos.map((foto, index) => ({ foto, title: tiles[index] }));
+
+const isOpenModalPhoto = ref(false);
+const currentPhoto = ref(null);
+
+const openModalPhoto = (photo) => {
+  currentPhoto.value = photo;
+  isOpenModalPhoto.value = true;
+  document.body.style.overflow = 'hidden';
+}
+
+const closeModalPhoto = () => {
+  currentPhoto.value = null;
+  isOpenModalPhoto.value = false;
+  document.body.style = null;
+}
 </script>
 
 <template>
@@ -32,7 +49,7 @@ const allPhotos = fotos.map((foto, index) => ({ foto, title: tiles[index] }));
         </h1>
 
         <div class="grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8">
-          <div v-for="(photo, index) in allPhotos" class="group">
+          <div v-for="(photo, index) in allPhotos" class="group" @click="openModalPhoto(photo)">
             <div class="relative w-64 h-64 aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-lg bg-gray-200">
               <img :src="'/photos/' + photo.foto" :alt="photo.title" :title="photo.title" class="absolute inset-0 h-full w-full object-cover object-center group-hover:opacity-75">
               <div class="opacity-0 hover:opacity-100 duration-300 absolute inset-0 z-10 flex justify-center items-end text-3xl text-black font-bold">
@@ -45,5 +62,35 @@ const allPhotos = fotos.map((foto, index) => ({ foto, title: tiles[index] }));
       </div>
 
     </div>
+
+    <div v-if="isOpenModalPhoto" class="relative z-10">
+      <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"></div>
+
+      <div class="fixed inset-0 z-10 w-screen overflow-y-auto">
+        <div class="flex items-end justify-center p-4 text-center sm:items-center sm:p-0 h-full">
+          <div class="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full">
+            <div class="bg-white px-4 pb-4 pt-5 sm:p-6 sm:pb-4">
+              <div class="flex justify-center">
+                <div class="mt-3 text-center sm:ml-4 sm:mt-0 sm:text-left">
+                  <h3 class="text-base font-semibold leading-6 text-gray-900 text-center">Просмотр изображения в полном экране</h3>
+                  <div class="mt-2 flex justify-center">
+                    <img :src="'/photos/' + currentPhoto.foto" :alt="currentPhoto.title" :title="currentPhoto.title" class="w-5/6" />
+                  </div>
+                  <p class="text-2xl font-bold text-center text-black">
+                    {{ currentPhoto.title }}
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div class="bg-gray-50 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
+              <button @click="closeModalPhoto" type="button" class="mt-3 inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:mt-0 sm:w-auto">
+                Закрыть
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
   </div>
 </template>
