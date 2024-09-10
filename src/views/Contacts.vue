@@ -197,8 +197,8 @@ watch(isOpenBirthdayModal, () => {
 
 const allConditionsMet = ref(null);
 
-watch([nameInput, emailInput, phoneInput, birthday], () => {
-  allConditionsMet.value = validNameInput.value && validEmailInput.value && validPhoneInput.value && birthday.value;
+watch([validNameInput, validEmailInput, validPhoneInput, validBirthday], () => {
+  allConditionsMet.value = validNameInput.value && validEmailInput.value && validPhoneInput.value && validBirthday.value;
 
   if (allConditionsMet.value) {
     isButtonDisabled.value = true;
@@ -300,7 +300,7 @@ watch([nameInput, emailInput, phoneInput, birthday], () => {
                 <div class="relative">
                   <div @click="isOpenBirthdayModal = true">
                     <div :class="errorBirthday ? 'border-red-500 border-2' : validBirthday ? 'border-green-500 border-2' : 'border-none'" class="block px-4 w-full h-9 py-1.5 text-base text-gray-950 transition duration-75 placeholder:text-gray-400 appearance-none ring-1 ring-gray-400 focus:ring-2 focus:ring-amber-600 focus:outline-none rounded-lg sm:text-sm sm:leading-6 bg-gray-100">
-                      {{ selectedDay }} {{ selectedMonth }} {{ selectedYear }} ({{ birthday }})
+                      {{ selectedDay }} {{ selectedMonth }} {{ selectedYear }} {{ birthday ? '(' + birthday + ')' : '' }}
                     </div>
                   </div>
 

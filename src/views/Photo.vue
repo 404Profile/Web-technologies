@@ -63,7 +63,7 @@ const closeModalPhoto = () => {
 
     </div>
 
-    <div v-if="isOpenModalPhoto" class="relative z-10">
+    <div v-if="isOpenModalPhoto" class="relative z-50">
       <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"></div>
 
       <div class="fixed inset-0 z-10 w-screen overflow-y-auto">
