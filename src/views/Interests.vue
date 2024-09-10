@@ -1,4 +1,6 @@
 <script setup>
+import {onMounted} from "vue";
+
 const music = [
     'Tell Me - Hugeloud', 'Who We Are - Imagine Dragons', 'Starlight - ONEIL, KANVISE, SMOLA', 'Smithereens - Twenty One Pilots', 'Dream - QUATTROTEQUE, Mad Plazou, TRETIAKOVA',
 ];
@@ -10,6 +12,14 @@ const films = [
 const books = [
     'Гарри Поттер и философский камень', 'Преступление и наказание', 'Война миров',
 ];
+
+onMounted(() => {
+  const url = window.location.href;
+  if (window.location.href.includes('#')) {
+    const lastParam = url.split("#").slice(-1)[0];
+    document.getElementById(lastParam).scrollIntoView();
+  }
+});
 </script>
 
 <template>
