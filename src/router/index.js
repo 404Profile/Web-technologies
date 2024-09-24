@@ -36,12 +36,4 @@ router.beforeEach((to) => {
   useVisitsStore().getCookie(route);
 })
 
-window.addEventListener('beforeunload', () => {
-  for (let key in localStorage) {
-    if (key.startsWith('pageVisits-')) {
-      localStorage.removeItem(key);
-    }
-  }
-});
-
 export default router
