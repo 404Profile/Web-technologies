@@ -28,6 +28,7 @@ const goToElement = (id) => {
     return null;
   }
 }
+
 const currentTime = ref(formatDate());
 
 function formatDate() {
@@ -197,8 +198,11 @@ onBeforeUnmount(() => {
         </RouterLink>
       </div>
 
-      <div class="text-sm font-semibold leading-6 text-gray-900 flex pl-6">
-        | {{ currentTime }}
+      <div class="leading-6 flex pl-6 group relative">
+        <p class="text-sm font-semibold text-gray-900 cursor-help">| {{ currentTime }}</p>
+        <span class="absolute top-6 text-gray-600 text-sm font-semibold hidden group-hover:flex">
+          Время и дата в формате: ЧЧ Месяц ГГ
+        </span>
       </div>
 
     </nav>

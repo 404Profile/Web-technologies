@@ -1,37 +1,9 @@
 <script setup>
 import {ref} from "vue";
+import {useVisitsStore} from "@/stores/visitsStore.js";
 
-const visitsHome = ref(localStorage.getItem('pageVisits-home'));
-const visitsAbout = ref(localStorage.getItem('pageVisits-about'));
-const visitsInterests = ref(localStorage.getItem('pageVisits-interests'));
-const visitsStudy = ref(localStorage.getItem('pageVisits-study'));
-const visitsPhoto = ref(localStorage.getItem('pageVisits-photo'));
-const visitsContacts = ref(localStorage.getItem('pageVisits-contacts'));
-const visitsTest = ref(localStorage.getItem('pageVisits-test'));
-const visitsHistory = ref(localStorage.getItem('pageVisits-history'));
-
-function getCookie(name) {
-  const decodedCookie = decodeURIComponent(document.cookie);
-  const cookieArray = decodedCookie.split('; ');
-
-  for (let cookie of cookieArray) {
-    const [cookieName, cookieValue] = cookie.split('=');
-    if (cookieName === name) {
-      return cookieValue;
-    }
-  }
-
-  return null;
-}
-
-const visitsCookieHome = ref(getCookie('pageVisits-home'));
-const visitsCookieAbout = ref(getCookie('pageVisits-about'));
-const visitsCookieInterests = ref(getCookie('pageVisits-interests'));
-const visitsCookieStudy = ref(getCookie('pageVisits-study'));
-const visitsCookiePhoto = ref(getCookie('pageVisits-photo'));
-const visitsCookieContacts = ref(getCookie('pageVisits-contacts'));
-const visitsCookieTest = ref(getCookie('pageVisits-test'));
-const visitsCookieHistory = ref(getCookie('pageVisits-history'));
+const visitsInLocaleStorage = ref(useVisitsStore().visitsInLocaleStorage);
+const visitsInCookie = ref(useVisitsStore().visitsInCookie);
 </script>
 
 <template>
@@ -65,75 +37,16 @@ const visitsCookieHistory = ref(getCookie('pageVisits-history'));
               </tr>
               </thead>
               <tbody>
-              <tr class="hover:bg-gray-100">
+              <tr v-for="visit of visitsInLocaleStorage" class="hover:bg-gray-100">
                 <td class="border border-slate-700 px-2">
-                  <span class="text-sm text-gray-950 font-medium">Главная</span>
+                  <span class="text-sm text-gray-950 font-medium">
+                    {{ visit.name }}
+                  </span>
                 </td>
                 <td class="border border-slate-700 px-2">
-                  <span class="text-sm text-gray-950 font-medium">{{ visitsHome }}</span>
-                </td>
-              </tr>
-
-              <tr class="hover:bg-gray-100">
-                <td class="border border-slate-700 px-2">
-                  <span class="text-sm text-gray-950 font-medium">Обо мне</span>
-                </td>
-                <td class="border border-slate-700 px-2">
-                  <span class="text-sm text-gray-950 font-medium">{{ visitsAbout }}</span>
-                </td>
-              </tr>
-
-              <tr class="hover:bg-gray-100">
-                <td class="border border-slate-700 px-2">
-                  <span class="text-sm text-gray-950 font-medium">Мои интересы</span>
-                </td>
-                <td class="border border-slate-700 px-2">
-                  <span class="text-sm text-gray-950 font-medium">{{ visitsInterests }}</span>
-                </td>
-              </tr>
-
-              <tr class="hover:bg-gray-100">
-                <td class="border border-slate-700 px-2">
-                  <span class="text-sm text-gray-950 font-medium">Учеба</span>
-                </td>
-                <td class="border border-slate-700 px-2">
-                  <span class="text-sm text-gray-950 font-medium">{{ visitsStudy }}</span>
-                </td>
-              </tr>
-
-              <tr class="hover:bg-gray-100">
-                <td class="border border-slate-700 px-2">
-                  <span class="text-sm text-gray-950 font-medium">Фотоальбом</span>
-                </td>
-                <td class="border border-slate-700 px-2">
-                  <span class="text-sm text-gray-950 font-medium">{{ visitsPhoto }}</span>
-                </td>
-              </tr>
-
-              <tr class="hover:bg-gray-100">
-                <td class="border border-slate-700 px-2">
-                  <span class="text-sm text-gray-950 font-medium">Контакты</span>
-                </td>
-                <td class="border border-slate-700 px-2">
-                  <span class="text-sm text-gray-950 font-medium">{{ visitsContacts }}</span>
-                </td>
-              </tr>
-
-              <tr class="hover:bg-gray-100">
-                <td class="border border-slate-700 px-2">
-                  <span class="text-sm text-gray-950 font-medium">Тест</span>
-                </td>
-                <td class="border border-slate-700 px-2">
-                  <span class="text-sm text-gray-950 font-medium">{{ visitsTest }}</span>
-                </td>
-              </tr>
-
-              <tr class="hover:bg-gray-100">
-                <td class="border border-slate-700 px-2">
-                  <span class="text-sm text-gray-950 font-medium">История</span>
-                </td>
-                <td class="border border-slate-700 px-2">
-                  <span class="text-sm text-gray-950 font-medium">{{ visitsHistory }}</span>
+                  <span class="text-sm text-gray-950 font-medium">
+                    {{ visit.count }}
+                  </span>
                 </td>
               </tr>
               </tbody>
@@ -150,75 +63,16 @@ const visitsCookieHistory = ref(getCookie('pageVisits-history'));
               </tr>
               </thead>
               <tbody>
-              <tr class="hover:bg-gray-100">
+              <tr v-for="visit of visitsInCookie" class="hover:bg-gray-100">
                 <td class="border border-slate-700 px-2">
-                  <span class="text-sm text-gray-950 font-medium">Главная</span>
+                  <span class="text-sm text-gray-950 font-medium">
+                    {{ visit.name }}
+                  </span>
                 </td>
                 <td class="border border-slate-700 px-2">
-                  <span class="text-sm text-gray-950 font-medium">{{ visitsCookieHome }}</span>
-                </td>
-              </tr>
-
-              <tr class="hover:bg-gray-100">
-                <td class="border border-slate-700 px-2">
-                  <span class="text-sm text-gray-950 font-medium">Обо мне</span>
-                </td>
-                <td class="border border-slate-700 px-2">
-                  <span class="text-sm text-gray-950 font-medium">{{ visitsCookieAbout }}</span>
-                </td>
-              </tr>
-
-              <tr class="hover:bg-gray-100">
-                <td class="border border-slate-700 px-2">
-                  <span class="text-sm text-gray-950 font-medium">Мои интересы</span>
-                </td>
-                <td class="border border-slate-700 px-2">
-                  <span class="text-sm text-gray-950 font-medium">{{ visitsCookieInterests }}</span>
-                </td>
-              </tr>
-
-              <tr class="hover:bg-gray-100">
-                <td class="border border-slate-700 px-2">
-                  <span class="text-sm text-gray-950 font-medium">Учеба</span>
-                </td>
-                <td class="border border-slate-700 px-2">
-                  <span class="text-sm text-gray-950 font-medium">{{ visitsCookieStudy }}</span>
-                </td>
-              </tr>
-
-              <tr class="hover:bg-gray-100">
-                <td class="border border-slate-700 px-2">
-                  <span class="text-sm text-gray-950 font-medium">Фотоальбом</span>
-                </td>
-                <td class="border border-slate-700 px-2">
-                  <span class="text-sm text-gray-950 font-medium">{{ visitsCookiePhoto }}</span>
-                </td>
-              </tr>
-
-              <tr class="hover:bg-gray-100">
-                <td class="border border-slate-700 px-2">
-                  <span class="text-sm text-gray-950 font-medium">Контакты</span>
-                </td>
-                <td class="border border-slate-700 px-2">
-                  <span class="text-sm text-gray-950 font-medium">{{ visitsCookieContacts }}</span>
-                </td>
-              </tr>
-
-              <tr class="hover:bg-gray-100">
-                <td class="border border-slate-700 px-2">
-                  <span class="text-sm text-gray-950 font-medium">Тест</span>
-                </td>
-                <td class="border border-slate-700 px-2">
-                  <span class="text-sm text-gray-950 font-medium">{{ visitsCookieTest }}</span>
-                </td>
-              </tr>
-
-              <tr class="hover:bg-gray-100">
-                <td class="border border-slate-700 px-2">
-                  <span class="text-sm text-gray-950 font-medium">История</span>
-                </td>
-                <td class="border border-slate-700 px-2">
-                  <span class="text-sm text-gray-950 font-medium">{{ visitsCookieHistory }}</span>
+                  <span class="text-sm text-gray-950 font-medium">
+                    {{ visit.count }}
+                  </span>
                 </td>
               </tr>
               </tbody>
